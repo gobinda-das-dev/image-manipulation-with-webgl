@@ -7,7 +7,6 @@ import gsap from 'gsap';
 const $ = (e, p = document) => p.querySelector(e);
 const $$ = (e, p = document) => p.querySelectorAll(e);
 
-
 class Sketch {
   constructor(options) {
     this.clock = new THREE.Clock();
@@ -41,7 +40,7 @@ class Sketch {
     this.resize();
     this.setPosition();
     this.setupResize();
-    this.hover();
+    this.addEventListeners(); // Changed hover() to addEventListeners()
     this.render();
   }
 
@@ -66,7 +65,7 @@ class Sketch {
       img.mesh.geometry = new THREE.PlaneGeometry(bounds.width, bounds.height, 32, 32);
       img.mesh.position.y = -bounds.top + this.height / 2 - bounds.height / 2;
       img.mesh.position.x = bounds.left + - this.width / 2 + bounds.width / 2;
-    })
+    });
   }
 
   addImages() {
@@ -99,28 +98,40 @@ class Sketch {
     });
   }
 
-  hover() {
+  addEventListeners() {
     this.mouse = new THREE.Vector2(0, 0);
     const image = $('.images img');
     const radiusTw = gsap.to(this.material.uniforms.uRadius, {
       value: 1,
       ease: 'power1.inOut',
       paused: true
-    })
-    
-    image.addEventListener('mousemove', (d) =>{
-      this.mouse.x = d.offsetX / image.offsetWidth;
-      this.mouse.y = 1 - d.offsetY / image.offsetHeight;
+    });
+
+    const updateMousePosition = (x, y) => {
+      this.mouse.x = x / image.offsetWidth;
+      this.mouse.y = 1 - y / image.offsetHeight;
       gsap.to(this.material.uniforms.uMouse.value, {
         x: this.mouse.x,
         y: this.mouse.y,
         ease: 'expo',
         duration: 1
-      })
-      // this.material.uniforms.uMouse.value.set(this.mouse.x, this.mouse.y);
-    })
-    image.addEventListener('mouseenter', () => radiusTw.play())
-    image.addEventListener('mouseleave', () => radiusTw.reverse())
+      });
+    };
+
+    const enterEvent = () => radiusTw.play();
+    const leaveEvent = () => radiusTw.reverse();
+
+    // Handle both mouse and touch events
+    image.addEventListener('mousemove', (d) => updateMousePosition(d.offsetX, d.offsetY));
+    image.addEventListener('touchmove', (d) => {
+      const touch = d.touches[0];
+      const rect = image.getBoundingClientRect();
+      updateMousePosition(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+    image.addEventListener('mouseenter', enterEvent);
+    image.addEventListener('touchstart', enterEvent);
+    image.addEventListener('mouseleave', leaveEvent);
+    image.addEventListener('touchend', leaveEvent);
   }
 
   render() {
@@ -135,21 +146,31 @@ new Sketch({
   dom: $('.canvas')
 });
 
-
-document.body.addEventListener('mousemove', ({x,y}) => {
-  gsap.to('#cursor',{
-    x,y,
+document.body.addEventListener('mousemove', ({x, y}) => {
+  gsap.to('#cursor', {
+    x, y,
     ease: 'expo',
     duration: 0.7
-  })
-})
+  });
+});
+document.body.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  gsap.to('#cursor', {
+    x: touch.clientX,
+    y: touch.clientY,
+    ease: 'expo',
+    duration: 0.7
+  });
+});
 const cursorTw = gsap.to('#cursor', {
   height: 20,
   width: 20,
   ease: 'power1.inOut',
   paused: true
-})
+});
 
 const image = $('.images img');
 image.addEventListener('mouseenter', () => cursorTw.play());
+image.addEventListener('touchstart', () => cursorTw.play());
 image.addEventListener('mouseleave', () => cursorTw.reverse());
+image.addEventListener('touchend', () => cursorTw.reverse());
