@@ -76,8 +76,10 @@ class Sketch {
       uTime: { value: 0 },
       uTimeline: { value: 0 },
       uImage1: { value: textures[0] },
+      uImage2: { value: textureLoader.load('/2.webp') },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uRadius: { value: 0 }
+      uRadius: { value: 0 },
+      uStrength: { value: -0.5 },
     };
 
     this.material = new THREE.ShaderMaterial({
@@ -99,39 +101,19 @@ class Sketch {
   }
 
   addEventListeners() {
-    this.mouse = new THREE.Vector2(0, 0);
     const image = $('.images img');
-    const radiusTw = gsap.to(this.material.uniforms.uRadius, {
-      value: 1,
-      ease: 'power1.inOut',
-      paused: true
+    image.addEventListener('mouseenter', () => {
+      gsap.to(this.material.uniforms.uStrength, { value: 1, ease: 'expo', duration: 1.5 });
     });
-
-    const updateMousePosition = (x, y) => {
-      this.mouse.x = x / image.offsetWidth;
-      this.mouse.y = 1 - y / image.offsetHeight;
-      gsap.to(this.material.uniforms.uMouse.value, {
-        x: this.mouse.x,
-        y: this.mouse.y,
-        ease: 'expo',
-        duration: 1
-      });
-    };
-
-    const enterEvent = () => radiusTw.play();
-    const leaveEvent = () => radiusTw.reverse();
-
-    // Handle both mouse and touch events
-    image.addEventListener('mousemove', (d) => updateMousePosition(d.offsetX, d.offsetY));
-    image.addEventListener('touchmove', (d) => {
-      const touch = d.touches[0];
-      const rect = image.getBoundingClientRect();
-      updateMousePosition(touch.clientX - rect.left, touch.clientY - rect.top);
+    image.addEventListener('touchstart', () => {
+      gsap.to(this.material.uniforms.uStrength, { value: 1, ease: 'expo', duration: 1.5 });
     });
-    image.addEventListener('mouseenter', enterEvent);
-    image.addEventListener('touchstart', enterEvent);
-    image.addEventListener('mouseleave', leaveEvent);
-    image.addEventListener('touchend', leaveEvent);
+    image.addEventListener('mouseleave', () => {
+      gsap.to(this.material.uniforms.uStrength, { value: -0.5, ease: 'expo', duration: 1.5 });
+    });
+    image.addEventListener('touchend', () => {
+      gsap.to(this.material.uniforms.uStrength, { value: -0.5, ease: 'expo', duration: 1.5 });
+    });
   }
 
   render() {
