@@ -17,7 +17,7 @@ void main() {
     float circle = vNewPosition.z * 0.1;
 
     float strength = dot(
-        circle + 1.5,
+        circle + 2.,
         (0.7 - circle) + 0.5
     );
     strength = smoothstep(-2.0, 2., strength);
