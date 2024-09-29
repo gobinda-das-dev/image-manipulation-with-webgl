@@ -41,7 +41,7 @@ function appendNav() {
    canvasContainer.innerHTML += `
       <nav class="h-screen font-medium w-[32vw] bg-[#f5f5f5] py-[10vh] flex flex-col gap-10 text-[#333] fixed right-0 top-0 px-[5vw] overflow-y-auto">
         <h1 class="text-center text-2xl font-bold">Some webgl image manipulation practice</h1>
-        <p class="px-7 py-2 border border-current rounded-full w-fit">hover to see the magic</p>
+        <p class="px-7 py-2 border border-current rounded-full w-fit cursor-not-allowed">hover to see the magic</p>
         
         <div class="w-[80%] space-y-2">
           <p>Varients:</p>
@@ -89,7 +89,7 @@ function handleCursorMovement() {
       mouseVelocity.y = Math.abs(mouse.y - smoothMouse.y);
 
       const angle = Math.atan2(mouse.y - smoothMouse.y, mouse.x - smoothMouse.x) * (180 / Math.PI);
-      const scaleAmount = Math.min((mouseVelocity.x + mouseVelocity.y) * 0.0035, 0.5);
+      const scaleAmount = Math.min((mouseVelocity.x + mouseVelocity.y) * 0.007, 0.7);
 
       setter.x(smoothMouse.x);
       setter.y(smoothMouse.y);
