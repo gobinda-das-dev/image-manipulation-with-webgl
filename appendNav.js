@@ -43,7 +43,7 @@ function appendNav() {
         <h1 class="text-center text-2xl font-bold">Some webgl image manipulation practice</h1>
         <p class="px-7 py-2 border border-current rounded-full w-fit cursor-not-allowed">hover to see the magic</p>
 
-        <a href="https://github.com/gobinda-das-dev/image-manipulation-with-webgl/tree/main${currentPath}" class="underline">Source code</a>
+        <a href="https://github.com/gobinda-das-dev/image-manipulation-with-webgl/tree/main${currentPath}" target="_blank" class="underline">Source code</a>
         
         <div class="w-[80%] space-y-2">
           <p>Varients:</p>
