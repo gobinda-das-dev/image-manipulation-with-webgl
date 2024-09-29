@@ -76,7 +76,7 @@ class Sketch {
       uTime: { value: 0 },
       uTimeline: { value: 0 },
       uImage1: { value: textures[0] },
-      uImage2: { value: textureLoader.load('/2.webp') },
+      uImage2: { value: textureLoader.load('/5.webp') },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uRadius: { value: 0 },
       uStrength: { value: -0.5 },
