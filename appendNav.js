@@ -19,16 +19,23 @@ handleCursorMovement();
 // Imp F(x)
 function appendNav() {
    const canvasContainer = $('.canvas');
-
+   const currentPath = window.location.pathname;
    const noOfPages = 8;
 
    const linksContainer = document.createElement('div');
-   for (let i = 0; i < noOfPages; i++) {
-      const route = (i + 1).toString().padStart(2, '0');
+   for (let i = 1; i <= noOfPages; i++) {
+      const route = i.toString().padStart(2, '0');
+      const finalRoute = `/${route}/`;
+      if (currentPath === finalRoute) {
+         linksContainer.innerHTML += `
+            <a href="${finalRoute}" data-cursor-scale="0.5" class="size-10 text-[#f5f5f5] bg-[#333] border border-current rounded-full flex items-center justify-center">${i}</a>
+         `;
+      } else {
+         linksContainer.innerHTML += `
+            <a href="${finalRoute}" data-cursor-scale="0.5" class="size-10 hover:text-[#f5f5f5] hover:bg-[#333] border border-current rounded-full flex items-center justify-center">${i}</a>
+         `;
+      }
 
-      linksContainer.innerHTML += `
-      <a href="/${route}/" class="size-10 hover:text-[#f5f5f5] hover:bg-[#333] border border-current rounded-full flex items-center justify-center">${i + 1}</a>
-   `;
    }
 
    canvasContainer.innerHTML += `
@@ -75,8 +82,8 @@ function handleCursorMovement() {
    }
 
    gsap.ticker.add(() => {
-      smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.15);
-      smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.15);
+      smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.2);
+      smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.2);
 
       mouseVelocity.x = Math.abs(mouse.x - smoothMouse.x);
       mouseVelocity.y = Math.abs(mouse.y - smoothMouse.y);
@@ -104,18 +111,18 @@ function handleCursorMovement() {
 
 
 
-   // handle cursor movement
-   const cursorTw = gsap.to('#cursor', {
-      height: 20,
-      width: 20,
-      ease: 'power1.inOut',
-      paused: true,
-      duration: 0.3
-   });
+   const scaleCursor = $$('[data-cursor-scale]');
+   const cursorSize = 40;
 
-   const image = $('.images img');
-   image.addEventListener('mouseenter', () => cursorTw.play());
-   image.addEventListener('touchstart', () => cursorTw.play());
-   image.addEventListener('mouseleave', () => cursorTw.reverse());
-   image.addEventListener('touchend', () => cursorTw.reverse());
+   scaleCursor.forEach(sc => {
+      const scale = sc.getAttribute('data-cursor-scale') * cursorSize;
+      console.log(sc);
+
+      sc.addEventListener('mouseenter', () => {
+         gsap.to('#cursor', { height: scale, width: scale, duration: 0.3 });
+      })
+      sc.addEventListener('mouseleave', () => {
+         gsap.to('#cursor', { height: cursorSize, width: cursorSize, duration: 0.3 });
+      });
+   })
 }
