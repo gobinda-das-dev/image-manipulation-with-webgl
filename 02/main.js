@@ -145,32 +145,3 @@ class Sketch {
 new Sketch({
   dom: $('.canvas')
 });
-
-document.body.addEventListener('mousemove', ({x, y}) => {
-  gsap.to('#cursor', {
-    x, y,
-    ease: 'expo',
-    duration: 0.7
-  });
-});
-document.body.addEventListener('touchmove', (e) => {
-  const touch = e.touches[0];
-  gsap.to('#cursor', {
-    x: touch.clientX,
-    y: touch.clientY,
-    ease: 'expo',
-    duration: 0.7
-  });
-});
-const cursorTw = gsap.to('#cursor', {
-  height: 20,
-  width: 20,
-  ease: 'power1.inOut',
-  paused: true
-});
-
-const image = $('.images img');
-image.addEventListener('mouseenter', () => cursorTw.play());
-image.addEventListener('touchstart', () => cursorTw.play());
-image.addEventListener('mouseleave', () => cursorTw.reverse());
-image.addEventListener('touchend', () => cursorTw.reverse());
