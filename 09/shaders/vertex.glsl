@@ -10,7 +10,7 @@ varying vec3 vNewPosition;
 
 void main() {
     vec3 newPosition = position;
-    newPosition.z += sin(((uStrength+uv.y+1.0))*PI)*10.;
+    newPosition.z += sin(((uStrength+uv.y+1.0))*PI)*20.;
     newPosition.z += sin(((uStrength-uv.x+0.0))*PI)*10.;
 
 

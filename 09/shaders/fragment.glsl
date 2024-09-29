@@ -13,16 +13,16 @@ void main() {
     vec4 color1 = texture2D(uImage1, uv);
     vec4 color2 = texture2D(uImage2, uv);
 
-    float st = 1.0;
-    float circle = vNewPosition.z * 0.1;
+    float st = smoothstep(-10., 5., uStrength);
+    float circle = vNewPosition.z * st * (uStrength + 0.5);
 
     float strength = dot(
         circle + 2.,
-        (0.7 - circle) + 0.5
+        (1.2 - circle) + 0.5
     );
-    strength = smoothstep(-2.0, 2., strength);
+    strength = smoothstep(-2.0, 0.0, strength);
 
-    vec4 color = mix(color1, color2, strength);
+    vec4 color = mix(color2, color1, strength);
 
     gl_FragColor = color;
 }
