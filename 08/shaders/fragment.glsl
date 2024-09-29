@@ -17,12 +17,12 @@ void main() {
     float circle = vEffectStrength * 1.5;
 
     float strength = dot(
-        circle + 1.5,
-        (0.7 - circle) + 0.5
+        circle + 0.75,
+        (1.5 - circle) + 0.75
     );
-    strength = smoothstep(-2.0, 2., strength);
+    strength = smoothstep(-10., 4., strength);
 
-    vec4 color = mix(color1, color2, strength);
+    vec4 color = mix(color2, color1, strength);
 
     gl_FragColor = color;
 }
