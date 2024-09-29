@@ -142,6 +142,8 @@ class Sketch {
   }
 }
 
-new Sketch({
-  dom: $('.canvas')
+window.addEventListener('load', () => {
+  new Sketch({
+    dom: $('.canvas')
+  });
 });
