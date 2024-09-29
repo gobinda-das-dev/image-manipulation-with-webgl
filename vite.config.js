@@ -1,7 +1,7 @@
 import glsl from 'vite-plugin-glsl';
 import { defineConfig } from 'vite';
 
-const noOfPages = 8;
+const noOfPages = 9;
 const inputs = {};
 
 for (let i = 1; i <= noOfPages; i++) {

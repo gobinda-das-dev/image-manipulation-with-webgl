@@ -20,7 +20,7 @@ handleCursorMovement();
 function appendNav() {
    const canvasContainer = $('.canvas');
    const currentPath = window.location.pathname;
-   const noOfPages = 8;
+   const noOfPages = 9;
 
    const linksContainer = document.createElement('div');
    for (let i = 1; i <= noOfPages; i++) {
