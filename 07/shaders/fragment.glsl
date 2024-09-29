@@ -22,7 +22,7 @@ void main() {
     );
     strength = smoothstep(-2.0, 2., strength);
 
-    vec4 color = mix(color1, color2, strength);
+    vec4 color = mix(color2, color1, strength);
 
     gl_FragColor = color;
 }
