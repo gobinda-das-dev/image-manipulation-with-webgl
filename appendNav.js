@@ -42,6 +42,8 @@ function appendNav() {
       <nav class="h-screen font-medium w-[32vw] bg-[#f5f5f5] py-[10vh] flex flex-col gap-10 text-[#333] fixed right-0 top-0 px-[5vw] overflow-y-auto">
         <h1 class="text-center text-2xl font-bold">Some webgl image manipulation practice</h1>
         <p class="px-7 py-2 border border-current rounded-full w-fit cursor-not-allowed">hover to see the magic</p>
+
+        <a href="https://github.com/gobinda-das-dev/image-manipulation-with-webgl/tree/main${currentPath}" class="underline">Source code</a>
         
         <div class="w-[80%] space-y-2">
           <p>Varients:</p>
