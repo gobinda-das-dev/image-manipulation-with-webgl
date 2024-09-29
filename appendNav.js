@@ -32,7 +32,7 @@ function appendNav() {
          `;
       } else {
          linksContainer.innerHTML += `
-            <a href="${finalRoute}" data-cursor-scale="0.5" class="size-10 hover:text-[#f5f5f5] hover:bg-[#333] border border-current rounded-full flex items-center justify-center">${i}</a>
+            <a href="${finalRoute}" data-cursor-scale="0.5" class="size-10 transition-all hover:text-[#f5f5f5] hover:bg-[#333] border border-current rounded-full flex items-center justify-center">${i}</a>
          `;
       }
 
